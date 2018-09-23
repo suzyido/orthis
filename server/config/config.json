@@ -1,12 +1,12 @@
 {
     "test": {
         "PORT": 3000,
-        "MONGODB_URI": "mongodb://localhost:27017/TodoAppTest",
+        "MONGODB_URI": "mongodb://localhost:27017/OrthisTest",
         "JWT_SECRET": "trfdafs4543ffd"
     },
     "development": {
         "PORT": 3000,
-        "MONGODB_URI": "mongodb://localhost:27017/TodoApp",
+        "MONGODB_URI": "mongodb://localhost:27017/Orthis",
         "JWT_SECRET": "09sa8df9ds8f9sadf8"
     }
 }
