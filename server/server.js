@@ -16,7 +16,6 @@ app.get('/options_group', (req, res) => {
 });
 
 app.post('/options', (req, res) => {
-    console.log(JSON.stringify(req.body));
     var option = new Option({
         type: req.body.type,
         data: req.body.data
