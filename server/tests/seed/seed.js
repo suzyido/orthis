@@ -31,12 +31,16 @@ const options = [
 {
     _id: new ObjectID(),
     type: 'text',
-    data: 'first test option'
+    title: 'first test title',
+    data: 'first test option',
+    _creator: userOneId
 },
 {
     _id: new ObjectID(),
     type: 'text',
-    data: 'second test option'
+    title: 'first test title',
+    data: 'second test option',
+    _creator: userTwoId
 }];
 
 const populateOptions = (done) => {

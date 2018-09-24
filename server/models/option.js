@@ -6,6 +6,9 @@ var OptionSchema = mongoose.Schema({
         required: true,
         minlength: 1
     },
+    title: {
+        type: String
+    }, 
     data: {
         type: String,
         required: true,
@@ -14,11 +17,11 @@ var OptionSchema = mongoose.Schema({
     validated: {
         type: Boolean,
         default: false
-    } /*,
+    },
     _creator: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
-    } */
+    }
 });
 
 var Option = mongoose.model('Option', OptionSchema);

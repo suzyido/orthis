@@ -14,13 +14,16 @@ describe('POST /options', () => {
     it('should create a new option', (done) => {
         const data = 'test option';
         const type = 'text';
+        const title = 'test title';
         
         request(app)
         .post('/options')
-        .send({type, data})
+        .set('x-auth', users[0].tokens[0].token)
+        .send({type, data, title})
         .expect(200)
         .expect((res) => {
             expect(res.body.type).toBe(type);
+            expect(res.body.title).toBe(title);
             expect(res.body.data).toBe(data);
         })
         .end((err, res) => {
@@ -29,13 +32,14 @@ describe('POST /options', () => {
             }
             Option.find({data}).then((options) => {
                 expect(options.length).toBe(1);
+                expect(options[0].title).toBe(title);
                 expect(options[0].data).toBe(data);
                 expect(options[0].type).toBe(type);
                 expect(options[0].validated).toBeFalsy();
                 done();
             }).catch((e) => done(e));
         });
-    });
+    }); 
 });
 
 describe('GET /users/me', () => {

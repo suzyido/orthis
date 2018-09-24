@@ -19,10 +19,12 @@ app.get('/options_group', (req, res) => {
     return res.send();
 });
 
-app.post('/options', (req, res) => {
+app.post('/options', authenticate, (req, res) => {
     var option = new Option({
         type: req.body.type,
-        data: req.body.data
+        title: req.body.title,
+        data: req.body.data,
+        _creator: req.user._id
     });
     
     option.save().then((doc) => {
