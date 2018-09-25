@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 
-var OptionGroupSchema = new mongoose.Schema({
+var OptionGroupSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
     options:[{
         option: {
-            type: Schema.Types.ObjectId, 
-            ref: 'Option',
+            type: mongoose.Schema.Types.ObjectId, 
+//            ref: 'Option',
             required: true
         },
         selectedCount: {
@@ -19,7 +23,15 @@ var OptionGroupSchema = new mongoose.Schema({
             type: Date,
             default: null
         }    
-    }]
+    }],
+    validated: {
+        type: Boolean,
+        default: false
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    }
 }); 
 
 var OptionGroup = mongoose.model('OptionGroup', OptionGroupSchema);

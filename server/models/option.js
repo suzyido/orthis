@@ -13,14 +13,6 @@ var OptionSchema = mongoose.Schema({
         type: String,
         required: true,
         minlength: 1
-    },
-    validated: {
-        type: Boolean,
-        default: false
-    },
-    _creator: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
     }
 });
 
