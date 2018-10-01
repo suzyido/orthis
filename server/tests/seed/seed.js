@@ -50,6 +50,10 @@ const optionsGroup = [{
 	title: "optionsGroup test1",
 	options: [{option: optionOneId}, {option: optionTwoId}],
     _creator: userOneId
+},{
+	title: "optionsGroup test2",
+	options: [{option: optionTwoId}, {option: optionOneId}],
+    _creator: userTwoId
 }];
 
 const populateOptionsGroup = (done) => {
