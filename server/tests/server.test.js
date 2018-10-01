@@ -4,18 +4,81 @@ const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Option} = require('./../models/option');
+const {OptionsGroup} = require('./../models/option-group');
 const {User} = require('./../models/user');
-const {options, populateOptions, users, populateUsers} = require('./seed/seed');
+const {options, populateOptions, 
+       optionsGroup, populateOptionsGroup, 
+       users, populateUsers} = require('./seed/seed');
 
-beforeEach(populateOptions);
 beforeEach(populateUsers);
+beforeEach(populateOptions);
+beforeEach(populateOptionsGroup);
+
+describe('POST /options_group', () => {
+    const title = 'optionsGroup test';
+    const type = 'text';
+    const data = 'data';
+
+    const optionsGroup = {
+        title,
+        options: [{type, data},
+                  {type, data}]
+    };
+
+    const optionsGroupNoTitle = {
+        options: [{type, data},
+                  {type, data}]
+    };
+
+    it('should create a new options_group', (done) => {    
+        request(app)
+        .post('/options_group')
+        .set('x-auth', users[0].tokens[0].token)
+        .send(optionsGroup)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body._id).toBeTruthy();
+        })
+        .end((err, res) => {
+            if(err) {
+                return done(err);
+            }
+            OptionsGroup.findOne({title}).then((group) => {
+                expect(group).toBeTruthy();
+                expect(group.options.length).toBe(2);
+                Option.findById(group.options[0]._id).then((optionObj) => {
+                    expect(optionObj.data).toBe(data);
+                    expect(optionObj.type).toBe(type);
+                    done();
+                }).catch((e) => done(e));
+            }).catch((e) => done(e));
+        }); 
+    });
+
+    it('should not create a new option_group if not autenticated', (done) => {
+        request(app)
+        .post('/options_group')
+        .send(optionsGroup)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not create a new option_group with no title', (done) => {
+        request(app)
+        .post('/options_group')
+        .set('x-auth', users[0].tokens[0].token)
+        .send(optionsGroupNoTitle)
+        .expect(400)
+        .end(done);
+    });
+});
 
 describe('POST /options', () => {
+    const data = 'test option';
+    const type = 'text';
+    const title = 'test title';
+    
     it('should create a new option', (done) => {
-        const data = 'test option';
-        const type = 'text';
-        const title = 'test title';
-        
         request(app)
         .post('/options')
         .set('x-auth', users[0].tokens[0].token)
@@ -28,7 +91,7 @@ describe('POST /options', () => {
         })
         .end((err, res) => {
             if(err) {
-                done(err);
+                return done(err);
             }
             Option.find({data}).then((options) => {
                 expect(options.length).toBe(1);
@@ -40,6 +103,14 @@ describe('POST /options', () => {
             }).catch((e) => done(e));
         });
     }); 
+
+    it('should not create a new option if not autenticated', (done) => {
+        request(app)
+        .post('/options')
+        .send({type, data, title})
+        .expect(401)
+        .end(done);
+    });
 });
 
 describe('GET /users/me', () => {
@@ -65,7 +136,7 @@ describe('GET /users/me', () => {
       .end(done);
     });
   });
-  
+ 
   describe('POST /users', () => {  
     it('should create a user', (done) => {
       var newUser = {
@@ -109,7 +180,7 @@ describe('GET /users/me', () => {
       .send({email: users[0].email, password: users[0].password})
       .expect(400)
       .end(done);
-    });
+    }); 
   });
 
   describe('POST /users/login', () => {

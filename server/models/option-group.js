@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var OptionGroupSchema = mongoose.Schema({
+var OptionsGroupSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -34,8 +34,8 @@ var OptionGroupSchema = mongoose.Schema({
     }
 }); 
 
-var OptionGroup = mongoose.model('OptionGroup', OptionGroupSchema);
+var OptionsGroup = mongoose.model('OptionsGroup', OptionsGroupSchema);
 
 module.exports = {
-    OptionGroup
+    OptionsGroup
 };

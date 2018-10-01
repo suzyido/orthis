@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var OptionSchema = mongoose.Schema({
     type: {
         type: String,
-        required: true,
         minlength: 1
     },
     title: {
@@ -11,7 +10,6 @@ var OptionSchema = mongoose.Schema({
     }, 
     data: {
         type: String,
-        required: true,
         minlength: 1
     }
 });
