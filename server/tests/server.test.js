@@ -1,7 +1,8 @@
 const {app} = require('./../server');
 const {populateOptions, 
        populateOptionsGroup, 
-       populateUsers} = require('./seed/seed');
+       populateUsers,
+       populateUserOptionsGroupAudit} = require('./seed/seed');
 const {postOptionsGroupTest, 
        getOptionsGroupTest} = require('./options_group_test');
 const {postOptionsTest} = require('./options_test');
@@ -13,6 +14,7 @@ const {getUsersMeTest,
 beforeEach(populateUsers);
 beforeEach(populateOptions);
 beforeEach(populateOptionsGroup);
+beforeEach(populateUserOptionsGroupAudit);
 
 describe('GET /options_group', getOptionsGroupTest);
 

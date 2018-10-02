@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const {Option} = require('./../../models/option');
 const {OptionsGroup} = require('./../../models/option-group');
+const {UserOptionsGroupAudit} = require('./../../models/user-options-group-audit');
 const {User} = require('./../../models/user');
 
 const userOneId = new ObjectID();
@@ -47,14 +48,21 @@ const options = [
 }];
 
 const optionsGroup = [{
-	title: "optionsGroup test1",
+	title: 'optionsGroup test1',
 	options: [{option: optionOneId}, {option: optionTwoId}],
     _creator: userOneId
-},{
-	title: "optionsGroup test2",
-	options: [{option: optionTwoId}, {option: optionOneId}],
-    _creator: userTwoId
 }];
+
+const populateUserOptionsGroupAudit = (done) => {
+    UserOptionsGroupAudit.deleteMany({}).then(() => {
+       done(); 
+    }, (err) => {
+        if(err) {
+            console.log('Error deleting seed data for UserOptionsGroupAudit', err);
+            done(err);
+        }
+    });
+};
 
 const populateOptionsGroup = (done) => {
     OptionsGroup.deleteMany({}).then(() => {
@@ -101,6 +109,7 @@ module.exports = {
     populateOptions,
     optionsGroup,
     populateOptionsGroup,
+    populateUserOptionsGroupAudit,
     users,
     populateUsers
 };

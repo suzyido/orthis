@@ -1,6 +1,6 @@
 var {OptionsGroup} = require('./../models/option-group');
 var {Option} = require('./../models/option');
-var {UserOptionsGroupAudit} = require('../models/user-options-audit');
+var {UserOptionsGroupAudit} = require('../models/user-options-group-audit');
 
 var addOptionToGroup = (res, optionsGroup, option, isLastOption) => {
     var objOption = {_id: option};

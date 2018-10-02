@@ -2,11 +2,65 @@ const expect = require('expect');
 const request = require('supertest');
 const {app} = require('./../server');
 const {OptionsGroup} = require('./../models/option-group');
+const {UserOptionsGroupAudit} = require('../models/user-options-group-audit');
 const {Option} = require('./../models/option');
-const {users} = require('./seed/seed');
+const {users,
+       optionsGroup} = require('./seed/seed');
 
 var getOptionsGroupTest = () => {
+    it('should return an optionGroup', (done) => {
+        request(app)
+        .get('/options_group')
+        .set('x-auth', users[0].tokens[0].token)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.title).toBe('optionsGroup test1');
+            expect(res.body.options.length).toBe(2);
+            expect(res.body.options[1].option).toEqual(optionsGroup[0].options[1].option.toHexString());
+        })
+        .end((err, res) => {
+            if(err) {
+                return done(err);
+            }
+            UserOptionsGroupAudit.find({}).then((documents) => {
+                expect(documents).toBeTruthy();
+                expect(documents.length).toBe(1);
+                done();
+            }).catch((e) => done(e));
+        });
+    });
 
+    it('should not return an OptionGroup', (done) => {
+        request(app)
+        .get('/options_group')
+        .set('x-auth', users[0].tokens[0].token)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.options.length).toBe(2);
+        })
+        .end((err, res) => {
+            if(err) {
+                return done(err);
+            }
+            request(app)
+            .get('/options_group')
+            .set('x-auth', users[0].tokens[0].token)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body).toEqual({});
+            })
+            .end((err, res) => {            
+                if(err) {
+                    return done(err);
+                }
+                UserOptionsGroupAudit.find({}).then((documents) => {
+                    expect(documents).toBeTruthy();
+                    expect(documents.length).toBe(1);
+                    done();
+                }).catch((e) => done(e));
+            });
+        });
+    });
 };
 
 var postOptionsGroupTest = () => {
@@ -35,7 +89,7 @@ var postOptionsGroupTest = () => {
                 return done(err);
             }
             OptionsGroup.find({}).then((groups) => {
-                expect(groups.length).toBe(3);
+                expect(groups.length).toBe(2);
                 done();
             }).catch((e) => done(e));
         });
