@@ -65,6 +65,7 @@ var updateUserOptionsGroupAudit = (user, optionsGroup) => {
 }
 
 var handleGetOptionsGroup = (req, res) => {
+    console.log('In handleGetOptionsGroup with', req.body);
     UserOptionsGroupAudit.find({user: req.user}).then((userOptionsGroupAudit) => {
         var optionsGroupAudit = userOptionsGroupAudit.map((optionsGroup) => { 
             return optionsGroup.optionsGroup});

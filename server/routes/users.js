@@ -16,6 +16,7 @@ var handlePostUsers = (req, res) => {
 };
 
 var handlePostUsersLogin = (req, res) => {
+    console.log('In handlePostUsersLogin with: ', req.body);
     var body = _.pick(req.body, ['email', 'password']);
     
     User.findByCredentials(body.email, body.password).then((user) => {
