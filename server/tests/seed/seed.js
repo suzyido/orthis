@@ -42,14 +42,14 @@ const options = [
 {
     _id: optionTwoId,
     type: 'text',
-    title: 'first test title',
+    title: 'second test title',
     data: 'second test option',
     _creator: userTwoId
 }];
 
 const optionsGroup = [{
 	title: 'optionsGroup test1',
-	options: [{option: optionOneId}, {option: optionTwoId}],
+	options: [{_id: optionOneId}, {_id: optionTwoId}],
     _creator: userOneId
 }];
 

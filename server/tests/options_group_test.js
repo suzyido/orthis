@@ -16,7 +16,10 @@ var getOptionsGroupTest = () => {
         .expect((res) => {
             expect(res.body.title).toBe('optionsGroup test1');
             expect(res.body.options.length).toBe(2);
-            expect(res.body.options[1].option).toEqual(optionsGroup[0].options[1].option.toHexString());
+            expect(res.body.options[0].type).toBe('text');
+            expect(res.body.options[1].title).toBe('second test title');
+            expect(res.body.options[1].data).toBe('second test option');         
+            expect(res.body.options[1]._id).toEqual(optionsGroup[0].options[1]._id.toHexString());
         })
         .end((err, res) => {
             if(err) {

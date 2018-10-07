@@ -6,9 +6,9 @@ var OptionsGroupSchema = mongoose.Schema({
         required: true
     },
     options:[{
-        option: {
+        _id: {
             type: mongoose.Schema.Types.ObjectId, 
-//            ref: 'Option',
+            ref: 'Option',
             required: true
         },
         selectedCount: {
