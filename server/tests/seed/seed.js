@@ -47,6 +47,7 @@ const options = [
     _creator: userTwoId
 }];
 
+
 const optionsGroup = [{
 	title: 'optionsGroup test1',
 	options: [{_id: optionOneId}, {_id: optionTwoId}],
